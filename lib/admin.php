@@ -5,10 +5,9 @@ namespace Formwerdung\Square\Lib;
 abstract class Admin extends Module {
   public static $label_key;
   public static $node_id;
-  protected static $meta_boxes_for_removal = array();
-  protected static $remove_meta_boxes_screen;
-  protected static $use_capability_meta_boxes = false;
-  protected static $capability_meta_box = 'manage_options';
+  protected static $remove_mbs = array();
+  protected static $is_mb_cap = false;
+  protected static $mb_cap = 'manage_options';
 
   public static function removeNavLabel() {
     if (!isset(static::$capability) || !current_user_can(static::$capability)) {
@@ -30,8 +29,8 @@ abstract class Admin extends Module {
    */
   public static function removeMetaBoxes() {
     $meta_boxes = static::buildMetaBoxArray();
-    if (static::$use_capability_meta_boxes) {
-      if (!current_user_can(static::$capability_meta_box)) {
+    if (static::$is_mb_cap) {
+      if (!current_user_can(static::$mb_cap)) {
         foreach ($meta_boxes as $meta_box) {
           remove_meta_box($meta_box['id'], $meta_box['page'], $meta_box['context']);
         }
@@ -49,7 +48,7 @@ abstract class Admin extends Module {
    * @mvc Controller
    */
   protected static function buildMetaBoxArray($screen = 'dashboard') {
-    $meta_box_ids = static::$meta_boxes_for_removal;
+    $meta_box_ids = static::$remove_mbs;
     $meta_boxes = array();
 
     foreach ($meta_box_ids as $meta_box_id) {

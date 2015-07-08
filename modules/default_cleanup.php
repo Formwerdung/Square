@@ -7,7 +7,7 @@ class DefaultCleanup extends \Formwerdung\Square\Lib\DashboardWidget {
   public static $capability = 'manage_options';
   protected static $widget_id = 'overview';
   protected static $widget_name = 'Overview';
-  protected static $meta_boxes_for_removal = array(
+  protected static $remove_mbs = array(
     'dashboard_right_now',
     'dashboard_recent_comments',
     'dashboard_incoming_links',
@@ -18,8 +18,6 @@ class DefaultCleanup extends \Formwerdung\Square\Lib\DashboardWidget {
     'dashboard_secondary',
     'dashboard_activity'
   );
-  protected static $use_capability_meta_boxes = false;
-  protected static $capability_meta_box = 'manage_options';
 
   public static function widgetTemplate() {
     $post_types = static::buildPostTypeArray();
