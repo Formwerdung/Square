@@ -19,20 +19,17 @@ abstract class Module extends Utils {
    *
    * @mvc @model
    *
-   * @param  string $temp_path The path to the template, relative to the plugin's `views` folder
-   * @param  array  $vars            An array of variables to pass into the template's scope, indexed with the variable name so that it can be extract()-ed
-   * @param  string $req              'once' to use require_once() | 'always' to use require()
+   * @param  string $temp_path  The path to the template, relative to the plugin's `views` folder
+   * @param  array  $vars       An array of variables to pass into the template's scope, indexed with the variable name so that it can be extract()-ed
+   * @param  string $req        'once' to use require_once() | 'always' to use require()
    * @return string
    */
   protected static function renderTemplate($temp_path = false, $vars = array(), $req = 'once') {
 
-    do_action('square_render_template_pre', $temp_path, $vars);
-
     $template_path = locate_template(basename($temp_path));
-    if (! $template_path) {
+    if (!$template_path) {
       $template_path = dirname(__DIR__) . '/views/' . $temp_path;
     }
-    $template_path = apply_filters('square_template_path', $template_path);
 
     if (is_file($template_path)) {
       extract($vars);
@@ -43,13 +40,12 @@ abstract class Module extends Utils {
       } else {
         require_once( $template_path );
       }
+      $template_content = ob_get_clean();
 
-      $template_content = apply_filters('square_template_content', ob_get_clean(), $temp_path, $template_path, $vars);
     } else {
       $template_content = '';
     }
 
-    do_action('square_render_template_post', $temp_path, $vars);
     return $template_content;
   }
 
