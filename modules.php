@@ -3,7 +3,6 @@
 namespace Formwerdung\Square;
 
 class Modules extends Lib\Utils {
-  protected static $i = 0;
 
   public function __construct() {
     $this->loadModules();
@@ -17,15 +16,13 @@ class Modules extends Lib\Utils {
    * Loop through available modules, create feature name and basename from file
    */
   protected function loadModules() {
-    $this->loadDefaultModule(self::$i);
-    self::$i++;
+    $this->loadDefaultModule();
     foreach (glob(__DIR__ . '/modules/*.php') as $file) {
       $basename = basename($file, '.php');
       $basename = $this->underscoresToDashes($basename);
       $feature = 'square-' . $basename;
       if ($this->isThemeFeature($feature)) {
-        $this->loadModule($file, $basename, self::$i);
-        self::$i++;
+        $this->loadModule($file, $basename);
       }
     }
   }
@@ -33,19 +30,19 @@ class Modules extends Lib\Utils {
   /**
    * Load single module, create class name from basename
    */
-  protected function loadModule($f, $bn, $i) {
+  protected function loadModule($f, $bn) {
     require_once($f);
     $class = $this->dashesToCamelCase($bn, true);
     $class = '\Formwerdung\Square\Modules\\' . $class;
-    $i = new $class;
+    new $class;
   }
 
   /**
    * Load default module
    */
-  protected function loadDefaultModule($i) {
+  protected function loadDefaultModule() {
     require_once('modules/default_cleanup.php');
-    $i = new \Formwerdung\Square\Modules\DefaultCleanup;
+    new \Formwerdung\Square\Modules\DefaultCleanup;
   }
 
   protected function activate() {

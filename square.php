@@ -50,6 +50,6 @@ class Square {
 }
 
 function square_init() {
-  $fw_square = new Square();
+  new Square();
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\square_init');
