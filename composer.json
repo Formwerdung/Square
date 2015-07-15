@@ -3,7 +3,7 @@
   "type": "wordpress-plugin",
   "license": "MIT",
   "description": "Individualizing the WordPress backend",
-  "homepage": "https://github.com/Formwerdung/square",
+  "homepage": "https://github.com/Formwerdung/Square",
   "authors": [
     {
       "name": "Formwerdung",
@@ -15,7 +15,7 @@
     "wordpress"
   ],
   "support": {
-    "issues": "https://github.com/Formwerdung/sqaure/issues"
+    "issues": "https://github.com/Formwerdung/Square/issues"
   },
   "require": {
     "php": ">=5.4.0",
