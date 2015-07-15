@@ -2,7 +2,7 @@
 
 namespace Formwerdung\Square\Lib;
 
-abstract class Module extends \Formwerdung\Square\Lib\Utils {
+abstract class Module extends Utils {
   public static $capability;
 
   public function __construct() {
