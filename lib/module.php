@@ -36,9 +36,9 @@ abstract class Module extends Utils {
       ob_start();
 
       if ('always' == $req) {
-        require( $template_path );
+        require($template_path);
       } else {
-        require_once( $template_path );
+        require_once($template_path);
       }
       $template_content = ob_get_clean();
 

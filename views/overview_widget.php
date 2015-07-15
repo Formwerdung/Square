@@ -112,7 +112,7 @@ do_action('square_activity_box_end');
 
 $actions = ob_get_clean();
 
-if (!empty( $actions )) : ?>
+if (!empty($actions)) : ?>
   <div class="sub">
     <?php echo $actions; ?>
   </div>
