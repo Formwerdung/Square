@@ -4,8 +4,9 @@ namespace Formwerdung\Square\Lib;
 
 abstract class Admin extends Module {
   public static $label_key;
+  public static $submenu_labels = [];
   public static $node_id;
-  protected static $remove_mbs = array();
+  protected static $remove_mbs = [];
   protected static $is_mb_cap = false;
   protected static $mb_cap = 'manage_options';
 
@@ -13,6 +14,18 @@ abstract class Admin extends Module {
     if (!isset(static::$capability) || !current_user_can(static::$capability)) {
       global $menu;
       unset($menu[static::$label_key]);
+    }
+  }
+
+  public static function hideSubmenuItems() {
+    if (!isset(static::$capability) || !current_user_can(static::$capability)) {
+      $submenu_labels = static::$submenu_labels;
+      d($submenu_labels);
+      foreach ($submenu_labels as $menu_slug => $submenu_slug) {
+        d($menu_slug);
+        d($submenu_slug);
+        remove_submenu_page($menu_slug, $submenu_slug);
+      }
     }
   }
 
@@ -82,8 +95,9 @@ abstract class Admin extends Module {
   }
 
   public static function registerHookCallbacks() {
-    add_action('admin_menu', array( get_called_class(), 'removeNavLabel'), 10);
-    add_action('admin_menu', array( get_called_class(), 'removeMetaBoxes'), 11);
-    add_action('admin_bar_menu', array( get_called_class(), 'removeNode'), 999);
+    add_action('admin_menu', [get_called_class(), 'removeNavLabel'], 10);
+    add_action('admin_menu', [get_called_class(), 'hideSubmenuItems'], 11);
+    add_action('admin_menu', [get_called_class(), 'removeMetaBoxes'], 12);
+    add_action('admin_bar_menu', [get_called_class(), 'removeNode'], 999);
   }
 }

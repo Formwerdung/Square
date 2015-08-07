@@ -4,6 +4,9 @@ namespace Formwerdung\Square\Modules;
 
 class RemoveComments extends \Formwerdung\Square\Lib\Admin {
   public static $label_key = 25;
+  public static $submenu_labels = [
+    "options-general.php" => "options-discussion.php"
+  ];
   public static $node_id = 'comments';
 
   // This is in Roots/Soil
@@ -34,10 +37,9 @@ class RemoveComments extends \Formwerdung\Square\Lib\Admin {
 	}
 
   public static function registerHookCallbacks() {
-    global $submenu;
-    var_dump($submenu);
     add_action('admin_menu', [get_called_class(), 'removeNavLabel'], 10);
-    add_action('admin_menu', [get_called_class(), 'removeMetaBoxes'], 11);
+    add_action('admin_menu', [get_called_class(), 'hideSubmenuItems'], 11);
+    add_action('admin_menu', [get_called_class(), 'removeMetaBoxes'], 12);
     add_action('admin_bar_menu', [get_called_class(), 'removeNode'], 999);
     // add_filter('wp_headers', [get_called_class(), 'filterHeaderComment']);
     add_action('template_redirect', [get_called_class(), 'filterQueryComment'], 9);	// before redirect_canonical
