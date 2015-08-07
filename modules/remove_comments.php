@@ -12,9 +12,9 @@ class RemoveComments extends \Formwerdung\Square\Lib\Admin {
   // This is in Roots/Soil
   // public static function filterHeaderComment( $headers ) {
   //  if (isset($header['X-Pingback']))
-	//  	unset( $headers['X-Pingback'] );
-	// 	return $headers;
-	// }
+    //  	unset( $headers['X-Pingback'] );
+    // 	return $headers;
+    // }
 
   public static function redirectAdminPages() {
     global $pagenow;
@@ -30,11 +30,11 @@ class RemoveComments extends \Formwerdung\Square\Lib\Admin {
   }
 
   public static function filterQueryComment() {
-		if (is_comment_feed()) {
-			// we are inside a comment feed
-			wp_die( 'There are no comments enabled on this site.', '', ['response' => 403]);
-		}
-	}
+    if (is_comment_feed()) {
+        // we are inside a comment feed
+        wp_die('There are no comments enabled on this site.', '', ['response' => 403]);
+    }
+  }
 
   public static function registerHookCallbacks() {
     add_action('admin_menu', [get_called_class(), 'removeNavLabel'], 10);
@@ -42,7 +42,7 @@ class RemoveComments extends \Formwerdung\Square\Lib\Admin {
     add_action('admin_menu', [get_called_class(), 'removeMetaBoxes'], 12);
     add_action('admin_bar_menu', [get_called_class(), 'removeNode'], 999);
     // add_filter('wp_headers', [get_called_class(), 'filterHeaderComment']);
-    add_action('template_redirect', [get_called_class(), 'filterQueryComment'], 9);	// before redirect_canonical
+    add_action('template_redirect', [get_called_class(), 'filterQueryComment'], 9);     // before redirect_canonical
     add_action('init', [get_called_class(), 'redirectAdminPages']);
   }
 }
