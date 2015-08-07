@@ -27,7 +27,6 @@ class DefaultCleanup extends \Formwerdung\Square\Lib\DashboardWidget {
   protected static function buildPostTypeArray() {
     // Loop through all post types
     $post_types = get_post_types(array('public' => true, '_builtin' => true), 'objects');
-    // @todo this should not be repeated, it's already in \Formwerdung\Square\Modules
     if (static::isThemeFeature('square-remove-posts')) {
       unset($post_types['post']);
     }
