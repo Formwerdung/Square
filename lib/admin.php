@@ -16,7 +16,7 @@ abstract class Admin extends Module {
   public static function hideMenuItems() {
     if (!isset(static::$menu_label_cap) || !current_user_can(static::$menu_label_cap)) {
       global $menu;
-      unset($menu[static::$label_key]);
+      unset($menu[static::$menu_label_key]);
     }
   }
 
