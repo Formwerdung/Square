@@ -19,7 +19,7 @@ class Modules extends Lib\Utils {
     $this->loadDefaultModule();
     foreach (glob(__DIR__ . '/modules/*.php') as $file) {
       $basename = basename($file, '.php');
-      $basename = $this->underscoresToDashes($basename);
+      $basename = \Formwerdung\Triangle::underscoresToDashes($basename);
       $feature = 'square-' . $basename;
       if ($this->isThemeFeature($feature)) {
         $this->loadModule($file, $basename);
@@ -32,7 +32,7 @@ class Modules extends Lib\Utils {
    */
   protected function loadModule($f, $bn) {
     require_once($f);
-    $class = $this->dashesToCamelCase($bn, true);
+    $class = \Formwerdung\Triangle::dashesToCamelCase($bn, true);
     $class = '\Formwerdung\Square\Modules\\' . $class;
     new $class;
   }
