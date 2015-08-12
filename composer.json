@@ -2,7 +2,7 @@
   "name": "formwerdung/square",
   "type": "wordpress-plugin",
   "license": "MIT",
-  "description": "Individualizing the WordPress backend",
+  "description": "A WordPress plugin which contains a collection of modules to apply theme-agnostic back-end modifications.",
   "homepage": "https://github.com/Formwerdung/Square",
   "authors": [
     {
@@ -19,6 +19,7 @@
   },
   "require": {
     "php": ">=5.4.0",
-    "composer/installers": "~1.0"
+    "composer/installers": "~1.0",
+    "formwerdung/triangle": "0.1.0"
   }
 }
