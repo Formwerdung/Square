@@ -75,7 +75,7 @@
      *
      * @param string $title Default attribute text.
      */
-    $title = __('Your site is asking search engines not to index its content');
+      $title = __('Your site is asking search engines not to index its content');
 
     /**
      * Filter the link label for the 'Search Engines Discouraged' message
@@ -87,10 +87,10 @@
      *
      * @param string $content Default text.
      */
-    $content = __('Search Engines Discouraged');
+      $content = __('Search Engines Discouraged');
 
-    echo "<p><a href='options-reading.php' title='$title'>$content</a></p>";
-  } ?>
+      echo "<p><a href='options-reading.php' title='$title'>$content</a></p>";
+    } ?>
 </div>
 <?php
 /*

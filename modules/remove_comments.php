@@ -36,12 +36,12 @@ class RemoveComments extends \Formwerdung\Square\Lib\Admin {
   }
 
   public static function registerHookCallbacks() {
-    add_action('admin_menu', [get_called_class(), 'hideMenuItems'], 10);
-    add_action('admin_menu', [get_called_class(), 'hideSubmenuItems'], 11);
-    add_action('admin_menu', [get_called_class(), 'removeMetaBoxes'], 12);
-    add_action('admin_bar_menu', [get_called_class(), 'removeNode'], 999);
-    // add_filter('wp_headers', [get_called_class(), 'filterHeaderComment']);
-    add_action('template_redirect', [get_called_class(), 'filterQueryComment'], 9);     // before redirect_canonical
-    add_action('init', [get_called_class(), 'redirectAdminPages']);
+    add_action('admin_menu', [ get_called_class(), 'hideMenuItems' ], 10);
+    add_action('admin_menu', [ get_called_class(), 'hideSubmenuItems' ], 11);
+    add_action('admin_menu', [ get_called_class(), 'removeMetaBoxes' ], 12);
+    add_action('admin_bar_menu', [ get_called_class(), 'removeNode' ], 999);
+    // add_filter('wp_headers', [ get_called_class(), 'filterHeaderComment']);
+    add_action('template_redirect', [ get_called_class(), 'filterQueryComment' ], 9);     // before redirect_canonical
+    add_action('init', [ get_called_class(), 'redirectAdminPages']);
   }
 }

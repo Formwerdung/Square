@@ -45,8 +45,6 @@ class Modules extends Lib\Utils {
     new \Formwerdung\Square\Modules\DefaultCleanup;
   }
 
-
-
   protected function activate() {
     flush_rewrite_rules();
   }
