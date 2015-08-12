@@ -3,7 +3,7 @@
 namespace Formwerdung\Square\Modules;
 
 class RemovePosts extends \Formwerdung\Square\Lib\DashboardWidget {
-  public static $label_key = 5;
+  public static $menu_label_key = 5;
   public static $node_id = 'new-post';
 
   public static function customMenuOrder() {
@@ -27,7 +27,7 @@ class RemovePosts extends \Formwerdung\Square\Lib\DashboardWidget {
   }
 
   public static function registerHookCallbacks() {
-    add_action('admin_menu', array(get_called_class(), 'removeNavLabel'), 10);
+    add_action('admin_menu', array(get_called_class(), 'hideMenuItems'), 10);
     add_action('admin_bar_menu', array(get_called_class(), 'removeNode'), 999);
     add_filter('custom_menu_order', '__return_true');
     add_filter('menu_order', array(get_called_class(), 'customMenuOrder'));

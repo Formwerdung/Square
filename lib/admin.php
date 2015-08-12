@@ -3,22 +3,25 @@
 namespace Formwerdung\Square\Lib;
 
 abstract class Admin extends Module {
-  public static $label_key;
+  public static $menu_label_key;
+  public static $menu_label_cap;
   public static $submenu_labels = [];
+  public static $submenu_label_cap;
   public static $node_id;
+  public static $remove_node_cap;
   protected static $remove_mbs = [];
   protected static $is_mb_cap = false;
   protected static $mb_cap = 'manage_options';
 
-  public static function removeNavLabel() {
-    if (!isset(static::$capability) || !current_user_can(static::$capability)) {
+  public static function hideMenuItems() {
+    if (!isset(static::$menu_label_cap) || !current_user_can(static::$menu_label_cap)) {
       global $menu;
       unset($menu[static::$label_key]);
     }
   }
 
   public static function hideSubmenuItems() {
-    if (!isset(static::$capability) || !current_user_can(static::$capability)) {
+    if (!isset(static::$submenu_label_cap) || !current_user_can(static::$submenu_label_cap)) {
       $submenu_labels = static::$submenu_labels;
       foreach ($submenu_labels as $menu_slug => $submenu_slug) {
         remove_submenu_page($menu_slug, $submenu_slug);
@@ -27,7 +30,7 @@ abstract class Admin extends Module {
   }
 
   public static function removeNode($wp_admin_bar) {
-    if (!isset(static::$capability) || !current_user_can(static::$capability)) {
+    if (!isset(static::$remove_node_cap) || !current_user_can(static::$remove_node_cap)) {
       $wp_admin_bar->remove_node(static::$node_id);
     }
   }
@@ -72,28 +75,12 @@ abstract class Admin extends Module {
     return $meta_boxes;
   }
 
-  protected static function getMetaBoxes( $screen = null, $context = 'advanced' ) {
-    global $wp_meta_boxes;
-
-    if ( empty( $screen ) )
-        $screen = get_current_screen();
-    elseif ( is_string( $screen ) )
-        $screen = convert_to_screen( $screen );
-
-    $page = $screen->id;
-
-    return $wp_meta_boxes[$page][$context];
-}
-
   /**
    * Get context of common meta boxes
    *
    * @mvc Controller
    */
   protected static function evaluateMetaBoxContext($id) {
-    global $wp_meta_boxes;
-    $mbs = self::getMetaBoxes('post','normal');
-    d($wp_meta_boxes['post']['side']);
     switch ($id) {
       case 'dashboard_quick_press':
       case 'dashbaord_recent_drafts':
@@ -108,7 +95,7 @@ abstract class Admin extends Module {
   }
 
   public static function registerHookCallbacks() {
-    add_action('admin_menu', [get_called_class(), 'removeNavLabel'], 10);
+    add_action('admin_menu', [get_called_class(), 'hideMenuItems'], 10);
     add_action('admin_menu', [get_called_class(), 'hideSubmenuItems'], 11);
     add_action('admin_menu', [get_called_class(), 'removeMetaBoxes'], 12);
     add_action('admin_bar_menu', [get_called_class(), 'removeNode'], 999);

@@ -3,8 +3,8 @@
 namespace Formwerdung\Square\Modules;
 
 class DefaultCleanup extends \Formwerdung\Square\Lib\DashboardWidget {
-  public static $label_key = 75; // Removes "Tools"
-  public static $capability = 'manage_options';
+  public static $menu_label_key = 75; // Removes "Tools"
+  public static $menu_label_cap = 'manage_options';
   protected static $widget_id = 'overview';
   protected static $widget_name = 'Overview';
   protected static $remove_mbs = array(
@@ -37,10 +37,9 @@ class DefaultCleanup extends \Formwerdung\Square\Lib\DashboardWidget {
   }
 
   public static function registerHookCallbacks() {
-    add_action('admin_menu', array( get_called_class(), 'removeNavLabel'), 10);
-    add_action('admin_menu', array(get_called_class(), 'removeNavLabel'), 11);
+    add_action('admin_menu', array( get_called_class(), 'hideMenuItems'), 10);
     add_action('admin_menu', array( get_called_class(), 'removeMetaBoxes'), 12);
     add_action('admin_bar_menu', array( get_called_class(), 'removeNode'), 999);
-    add_action('wp_dashboard_setup', array(get_called_class() , 'widgetInit'));
+    add_action('wp_dashboard_setup', array( get_called_class() , 'widgetInit') );
   }
 }

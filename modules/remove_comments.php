@@ -3,7 +3,7 @@
 namespace Formwerdung\Square\Modules;
 
 class RemoveComments extends \Formwerdung\Square\Lib\Admin {
-  public static $label_key = 25;
+  public static $menu_label_key = 25;
   public static $submenu_labels = [
     "options-general.php" => "options-discussion.php"
   ];
@@ -36,7 +36,7 @@ class RemoveComments extends \Formwerdung\Square\Lib\Admin {
   }
 
   public static function registerHookCallbacks() {
-    add_action('admin_menu', [get_called_class(), 'removeNavLabel'], 10);
+    add_action('admin_menu', [get_called_class(), 'hideMenuItems'], 10);
     add_action('admin_menu', [get_called_class(), 'hideSubmenuItems'], 11);
     add_action('admin_menu', [get_called_class(), 'removeMetaBoxes'], 12);
     add_action('admin_bar_menu', [get_called_class(), 'removeNode'], 999);
