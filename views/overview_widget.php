@@ -60,8 +60,7 @@
 
     ?>
     </ul>
-    <?php
-    update_right_now_message();
+    <?php update_right_now_message();
 
     // Check if search engines are asked not to index this site.
     if (! is_network_admin() && ! is_user_admin() && current_user_can('manage_options') && '1' != get_option('blog_public')) {
@@ -76,7 +75,7 @@
      *
      * @param string $title Default attribute text.
      */
-      $title = apply_filters('square_privacy_on_link_title', __('Your site is asking search engines not to index its content'));
+    $title = __('Your site is asking search engines not to index its content');
 
     /**
      * Filter the link label for the 'Search Engines Discouraged' message
@@ -88,11 +87,10 @@
      *
      * @param string $content Default text.
      */
-      $content = apply_filters('square_privacy_on_link_text', __('Search Engines Discouraged'));
+    $content = __('Search Engines Discouraged');
 
-      echo "<p><a href='options-reading.php' title='$title'>$content</a></p>";
-    }
-  ?>
+    echo "<p><a href='options-reading.php' title='$title'>$content</a></p>";
+  } ?>
 </div>
 <?php
 /*
@@ -100,15 +98,6 @@
  * Using an output buffer is the only way to really check if anything's displayed here.
  */
 ob_start();
-
-/**
- * Fires at the end of the 'At a Glance' dashboard widget.
- *
- * Prior to 3.8.0, the widget was named 'Right Now'.
- *
- * @since 2.0.0
- */
-do_action('square_activity_box_end');
 
 $actions = ob_get_clean();
 
