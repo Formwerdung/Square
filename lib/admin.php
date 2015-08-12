@@ -94,6 +94,31 @@ abstract class Admin extends Module {
     }
   }
 
+  /**
+   * Build an array of post types to be shown with the overview widget
+   *
+   * @return array $post_types
+   */
+  protected static function buildPostTypeArray($as_array = false) {
+
+    $output = $as_array ? 'names' : 'objects';
+    // Loop through all post types
+    $post_types = get_post_types(
+      ['public' => true, '_builtin' => true],
+      $output
+    );
+    if (static::isThemeFeature('square-remove-posts')) {
+      unset($post_types['post']);
+    }
+    if (!static::isThemeFeature('square-remove-comments')) {
+      $post_types['comments'] = 'comments';
+    }
+    return $post_types;
+  }
+
+  /**
+   * Register hook callbacks
+   */
   public static function registerHookCallbacks() {
     add_action('admin_menu', [get_called_class(), 'hideMenuItems'], 10);
     add_action('admin_menu', [get_called_class(), 'hideSubmenuItems'], 11);

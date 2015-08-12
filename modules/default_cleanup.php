@@ -49,26 +49,6 @@ class DefaultCleanup extends \Formwerdung\Square\Lib\DashboardWidget {
   }
 
   /**
-   * Build an array of post types to be shown with the overview widget
-   *
-   * @return array $post_types
-   */
-  protected static function buildPostTypeArray() {
-    // Loop through all post types
-    $post_types = get_post_types(
-      ['public' => true, '_builtin' => true],
-      'objects'
-    );
-    if (static::isThemeFeature('square-remove-posts')) {
-      unset($post_types['post']);
-    }
-    if (!static::isThemeFeature('square-remove-comments')) {
-      $post_types['comments'] = 'comments';
-    }
-    return $post_types;
-  }
-
-  /**
    * Enqueues stylesheet for the overview widget
    *
    * @return void
