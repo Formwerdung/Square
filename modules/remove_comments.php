@@ -3,10 +3,23 @@
 namespace Formwerdung\Square\Modules;
 
 class RemoveComments extends \Formwerdung\Square\Lib\Admin {
+
+  /**
+   * Key of menu label that is to be removed
+   * @url http://code.tutsplus.com/articles/customizing-your-wordpress-admin--wp-24941
+   */
   public static $menu_label_key = 25;
+
+  /**
+   * Array of submenu labels for removal
+   */
   public static $submenu_labels = [
     "options-general.php" => "options-discussion.php"
   ];
+
+  /**
+   * Admin bar node slug for removal
+   */
   public static $node_id = 'comments';
 
   // This is in Roots/Soil
@@ -16,6 +29,11 @@ class RemoveComments extends \Formwerdung\Square\Lib\Admin {
     // 	return $headers;
     // }
 
+  /**
+   * Redirect all requests for comment-related pages to the dashboard
+   *
+   * @return void
+   */
   public static function redirectAdminPages() {
     global $pagenow;
 
@@ -28,6 +46,9 @@ class RemoveComments extends \Formwerdung\Square\Lib\Admin {
     }
   }
 
+  /**
+   *
+   */
   public static function filterQueryComment() {
     if (is_comment_feed()) {
         // we are inside a comment feed
@@ -35,12 +56,16 @@ class RemoveComments extends \Formwerdung\Square\Lib\Admin {
     }
   }
 
+  /**
+   * Register hook callbacks
+   *
+   * @return void
+   */
   public static function registerHookCallbacks() {
     add_action('admin_menu', [ get_called_class(), 'hideMenuItems' ], 10);
     add_action('admin_menu', [ get_called_class(), 'hideSubmenuItems' ], 11);
     add_action('admin_menu', [ get_called_class(), 'removeMetaBoxes' ], 12);
     add_action('admin_bar_menu', [ get_called_class(), 'removeNode' ], 999);
-    // add_filter('wp_headers', [ get_called_class(), 'filterHeaderComment']);
     add_action('template_redirect', [ get_called_class(), 'filterQueryComment' ], 9);     // before redirect_canonical
     add_action('init', [ get_called_class(), 'redirectAdminPages']);
   }
