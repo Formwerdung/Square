@@ -20,10 +20,7 @@ abstract class Admin extends Module {
   public static function hideSubmenuItems() {
     if (!isset(static::$capability) || !current_user_can(static::$capability)) {
       $submenu_labels = static::$submenu_labels;
-      d($submenu_labels);
       foreach ($submenu_labels as $menu_slug => $submenu_slug) {
-        d($menu_slug);
-        d($submenu_slug);
         remove_submenu_page($menu_slug, $submenu_slug);
       }
     }
@@ -75,12 +72,28 @@ abstract class Admin extends Module {
     return $meta_boxes;
   }
 
+  protected static function getMetaBoxes( $screen = null, $context = 'advanced' ) {
+    global $wp_meta_boxes;
+
+    if ( empty( $screen ) )
+        $screen = get_current_screen();
+    elseif ( is_string( $screen ) )
+        $screen = convert_to_screen( $screen );
+
+    $page = $screen->id;
+
+    return $wp_meta_boxes[$page][$context];
+}
+
   /**
    * Get context of common meta boxes
    *
    * @mvc Controller
    */
   protected static function evaluateMetaBoxContext($id) {
+    global $wp_meta_boxes;
+    $mbs = self::getMetaBoxes('post','normal');
+    d($wp_meta_boxes['post']['side']);
     switch ($id) {
       case 'dashboard_quick_press':
       case 'dashbaord_recent_drafts':
