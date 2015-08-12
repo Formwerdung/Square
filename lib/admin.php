@@ -59,7 +59,7 @@ abstract class Admin extends Module {
    * Redirect certain links in the WordPress admin to the Dashboard
    *
    * @access public
-   * @param  array  $pages
+   * @param  none   is used in add_action
    * @uses   global $pagenow
    * @return void
    */
