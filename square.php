@@ -31,8 +31,7 @@ class Square {
       require_once('modules.php');
       $modules = new Square\Modules();
     } else {
-      return false;
-      // @todo: actual error message
+      add_notice('PHP or WordPress requirements are not met. Taxonomies Plugin was not loaded.', 'error');
     }
   }
 
