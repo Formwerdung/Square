@@ -207,7 +207,7 @@ class RemoveComments extends \Formwerdung\Square\Lib\Admin {
     add_action('init', [ get_called_class(), 'redirectAdminPages']);
     add_action('widgets_init', [ get_called_class(), 'disableRecCommWidget' ]);
     // add_filter('wp_headers', [ get_called_class(), 'filterHeadPingback' ]);
-    add_action('template_redirect', [ get_called_class(), 'filterFeedComment' ], 9); // before redirect_canonical
+    add_action('template_redirect', [ get_called_class(), 'filterFeedComments' ], 9); // before redirect_canonical
     add_action('init', [ get_called_class(), 'removePostTypeSupportComments' ]);
 
     static::multisiteHookCallbacks();
