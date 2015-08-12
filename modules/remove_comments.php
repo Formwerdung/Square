@@ -156,6 +156,36 @@ class RemoveComments extends \Formwerdung\Square\Lib\Admin {
         echo '<link rel="alternate" type="' . feed_content_type() . '" title="' . esc_attr(sprintf($args['feedtitle'], get_bloginfo('name'), $args['separator'])) . '" href="' . esc_url(get_feed_link()) . "\" />\n";
     }
 
+  public static function adminHookCallbacks() {
+    if (is_admin()) {
+      add_filter('pre_update_default_ping_status', '__return_false');
+      add_filter('pre_option_default_ping_status', '__return_zero');
+      add_filter('pre_update_default_pingback_flag', '__return_false');
+      add_filter('pre_option_default_pingback_flag', '__return_zero');
+    }
+  }
+
+  public static function frontendHookCallbacks() {
+    if (!is_admin()) {
+      add_action('template_redirect', [ get_called_class(), 'forceCommentTemplate']);
+      add_filter('comments_open', [ get_called_class(), 'filterCommentStatus' ], 20, 2);
+      add_filter('pings_open', [ get_called_class(), 'filterCommentStatus' ], 20, 2);
+      // remove comments links from feed
+      add_filter('post_comments_feed_link', '__return_false', 10, 1);
+          add_filter('comments_link_feed', '__return_false', 10, 1);
+          add_filter('comment_link', '__return_false', 10, 1);
+      // remove comment count from feed
+      add_filter('get_comments_number', '__return_false', 10, 2);
+      // run when wp_head executes
+      add_action('wp_head', [ get_called_class(), 'filterHeadFeed' ], 0);
+    }
+  }
+
+  public static function multisiteHookCallbacks() {
+    if (is_multisite()) {
+      add_action('admin_bar_menu', [ get_called_class(), 'removeNetworkCommentNodes' ], 500); }
+  }
+
   /**
    * Register hook callbacks
    *
@@ -163,40 +193,19 @@ class RemoveComments extends \Formwerdung\Square\Lib\Admin {
    * @uses   add_action()
    * @return void
    */
-    public static function registerHookCallbacks() {
-      add_action('admin_menu', [ get_called_class(), 'hideMenuItems' ], 10);
-      add_action('admin_menu', [ get_called_class(), 'hideSubmenuItems' ], 11);
-      add_action('admin_menu', [ get_called_class(), 'removeMetaBoxes' ], 12);
-      add_action('admin_bar_menu', [ get_called_class(), 'removeNode' ], 999);
+  public static function registerHookCallbacks() {
+    add_action('admin_menu', [ get_called_class(), 'hideMenuItems' ], 10);
+    add_action('admin_menu', [ get_called_class(), 'hideSubmenuItems' ], 11);
+    add_action('admin_menu', [ get_called_class(), 'removeMetaBoxes' ], 12);
+    add_action('admin_bar_menu', [ get_called_class(), 'removeNode' ], 999);
+    add_action('init', [ get_called_class(), 'redirectAdminPages']);
+    add_action('widgets_init', [ get_called_class(), 'disableRecCommWidget' ]);
+    // add_filter('wp_headers', [ get_called_class(), 'filterHeadPingback' ]);
+    add_action('template_redirect', [ get_called_class(), 'filterFeedComment' ], 9); // before redirect_canonical
+    add_action('init', [ get_called_class(), 'removePostTypeSupportComments' ]);
 
-      add_action('init', [ get_called_class(), 'redirectAdminPages']);
-
-      add_action('widgets_init', [ get_called_class(), 'disableRecCommWidget' ]);
-      // add_filter('wp_headers', [ get_called_class(), 'filterHeadPingback' ]);
-      add_action('template_redirect', [ get_called_class(), 'filterFeedComments' ], 9); // before redirect_canonical
-
-      if (is_multisite()) {
-        add_action('admin_bar_menu', [ get_called_class(), 'removeNetworkCommentNodes' ], 500); }
-
-      add_action('init', [ get_called_class(), 'removePostTypeSupportComments' ]);
-
-      if (is_admin()) {
-        add_filter('pre_update_default_ping_status', '__return_false');
-        add_filter('pre_option_default_ping_status', '__return_zero');
-        add_filter('pre_update_default_pingback_flag', '__return_false');
-        add_filter('pre_option_default_pingback_flag', '__return_zero');
-      } else {
-        add_action('template_redirect', [ get_called_class(), 'forceCommentTemplate']);
-        add_filter('comments_open', [ get_called_class(), 'filterCommentStatus' ], 20, 2);
-        add_filter('pings_open', [ get_called_class(), 'filterCommentStatus' ], 20, 2);
-        // remove comments links from feed
-        add_filter('post_comments_feed_link', '__return_false', 10, 1);
-            add_filter('comments_link_feed', '__return_false', 10, 1);
-            add_filter('comment_link', '__return_false', 10, 1);
-        // remove comment count from feed
-        add_filter('get_comments_number', '__return_false', 10, 2);
-        // run when wp_head executes
-        add_action('wp_head', [ get_called_class(), 'filterHeadFeed' ], 0);
-      }
-    }
+    static::multisiteHookCallbacks();
+    static::adminHookCallbacks();
+    static::frontendHookCallbacks();
+  }
 }
