@@ -142,20 +142,23 @@ class RemoveComments extends \Formwerdung\Square\Lib\Admin {
     }
   }
 
-    // replaces feed_links function, WP 4.1.1
-    public static function feedLinks($args = array()) {
+  // replaces feed_links function, WP 4.1.1
+  public static function feedLinks($args = array()) {
     if (!current_theme_supports('automatic-feed-links')) {
-        return; }
-        $defaults = array(
-            /* translators: Separator between blog name and feed type in feed links */
-            'separator'     => _x('&raquo;', 'feed link'),
-            /* translators: 1: blog title, 2: separator (raquo) */
-            'feedtitle'     => __('%1$s %2$s Feed'),
-        );
-        $args = wp_parse_args($args, $defaults);
-        echo '<link rel="alternate" type="' . feed_content_type() . '" title="' . esc_attr(sprintf($args['feedtitle'], get_bloginfo('name'), $args['separator'])) . '" href="' . esc_url(get_feed_link()) . "\" />\n";
-    }
+      return; }
+      $defaults = array(
+          /* translators: Separator between blog name and feed type in feed links */
+          'separator'     => _x('&raquo;', 'feed link'),
+          /* translators: 1: blog title, 2: separator (raquo) */
+          'feedtitle'     => __('%1$s %2$s Feed'),
+      );
+      $args = wp_parse_args($args, $defaults);
+      echo '<link rel="alternate" type="' . feed_content_type() . '" title="' . esc_attr(sprintf($args['feedtitle'], get_bloginfo('name'), $args['separator'])) . '" href="' . esc_url(get_feed_link()) . "\" />\n";
+  }
 
+  /**
+   * Callbacks that only need to happen in the backend
+   */
   public static function adminHookCallbacks() {
     if (is_admin()) {
       add_filter('pre_update_default_ping_status', '__return_false');
@@ -165,6 +168,9 @@ class RemoveComments extends \Formwerdung\Square\Lib\Admin {
     }
   }
 
+  /**
+   * Callbacks that only need to happen in the frontend
+   */
   public static function frontendHookCallbacks() {
     if (!is_admin()) {
       add_action('template_redirect', [ get_called_class(), 'forceCommentTemplate']);
