@@ -23,22 +23,13 @@ class RemoveComments extends \Formwerdung\Square\Lib\Admin {
   public static $node_id = 'comments';
 
   /**
-   * Redirect all requests for comment-related pages to the dashboard
-   *
-   * @uses   global $pagenow;
-   * @return void
+   * Array fo pages that should be redirected
    */
-  public static function redirectAdminPages() {
-    global $pagenow;
-
-    switch ($pagenow) {
-      case 'comment.php':
-      case 'edit-comments.php':
-      case 'options-discussion.php':
-        wp_safe_redirect(get_admin_url());
-        break;
-    }
-  }
+  public static $redirected_pages = [
+    'comment.php',
+    'edit-comments.php',
+    'options-discussion.php'
+  ];
 
   /**
    * Remove post type support for comments

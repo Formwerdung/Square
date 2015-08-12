@@ -2,9 +2,14 @@
 
 namespace Formwerdung\Square\Modules;
 
-class RemovePosts extends \Formwerdung\Square\Lib\DashboardWidget {
+class RemovePosts extends \Formwerdung\Square\Lib\Admin {
   public static $menu_label_key = 5;
   public static $node_id = 'new-post';
+  protected static $redirected_pages = [
+    'edit.php',
+    'edit-tags.php',
+    'post-new.php'
+  ];
 
   public static function customMenuOrder() {
     $menu_order = array(
@@ -26,7 +31,10 @@ class RemovePosts extends \Formwerdung\Square\Lib\DashboardWidget {
     return $menu_order;
   }
 
+
+
   public static function registerHookCallbacks() {
+    add_action('init', [ get_called_class(), 'redirectAdminPages']);
     add_action('admin_menu', array(get_called_class(), 'hideMenuItems'), 10);
     add_action('admin_bar_menu', array(get_called_class(), 'removeNode'), 999);
     add_filter('custom_menu_order', '__return_true');

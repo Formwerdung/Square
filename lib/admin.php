@@ -56,6 +56,29 @@ abstract class Admin extends Module {
   }
 
   /**
+   * Redirect certain links in the WordPress admin to the Dashboard
+   *
+   * @access public
+   * @param  array  $pages
+   * @uses   global $pagenow
+   * @return void
+   */
+  public static function redirectAdminPages() {
+    global $pagenow;
+
+    $pages = static::$redirected_pages;
+    if ($pages) {
+      foreach ($pages as $page) {
+        switch ($pagenow) {
+          case $page:
+            wp_safe_redirect(get_admin_url());
+            break;
+        }
+      }
+    }
+  }
+
+  /**
    * Make a meta box array to comfortably loop through
    *
    * @mvc Controller
