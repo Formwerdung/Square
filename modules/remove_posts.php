@@ -5,11 +5,41 @@ namespace Formwerdung\Square\Modules;
 class RemovePosts extends \Formwerdung\Square\Lib\Admin {
   public static $menu_label_key = 5;
   public static $node_id = 'new-post';
+
+  /**
+   * Array of admin pages that should be redirected
+   */
   protected static $redirected_pages = [
     'edit.php',
     'edit-tags.php',
     'post-new.php'
   ];
+
+
+  /**
+   * Redirect certain links in the WordPress admin to the Dashboard
+   *
+   * @access public
+   * @param  array  $pages
+   * @uses   global $pagenow
+   * @return void
+   */
+  public static function redirectAdminPages() {
+    global $pagenow, $wp;
+
+    $pages = static::$redirected_pages;
+    if ($pages && is_array($pages)) {
+      foreach ($pages as $page) {
+        switch ($pagenow) {
+          case $page:
+            if (!array_key_exists('post_type', $_GET) && !array_key_exists('taxonomy', $_GET) && !$_POST) {
+              wp_safe_redirect(get_admin_url(), 301);
+            }
+            break;
+        }
+      }
+    }
+  }
 
   public static function customMenuOrder() {
     $menu_order = array(
@@ -30,7 +60,6 @@ class RemovePosts extends \Formwerdung\Square\Lib\Admin {
     );
     return $menu_order;
   }
-
 
 
   public static function registerHookCallbacks() {

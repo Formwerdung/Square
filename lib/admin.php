@@ -67,11 +67,11 @@ abstract class Admin extends Module {
     global $pagenow;
 
     $pages = static::$redirected_pages;
-    if ($pages) {
+    if ($pages && is_array($pages)) {
       foreach ($pages as $page) {
         switch ($pagenow) {
           case $page:
-            wp_safe_redirect(get_admin_url());
+            wp_safe_redirect(get_admin_url(), 301);
             break;
         }
       }
