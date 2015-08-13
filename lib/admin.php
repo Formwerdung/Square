@@ -138,14 +138,4 @@ abstract class Admin extends Module {
     }
     return $post_types;
   }
-
-  /**
-   * Register hook callbacks
-   */
-  public static function registerHookCallbacks() {
-    add_action('admin_menu', [get_called_class(), 'hideMenuItems'], 10);
-    add_action('admin_menu', [get_called_class(), 'hideSubmenuItems'], 11);
-    add_action('admin_menu', [get_called_class(), 'removeMetaBoxes'], 12);
-    add_action('admin_bar_menu', [get_called_class(), 'removeNode'], 999);
-  }
 }
