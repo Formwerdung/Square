@@ -6,7 +6,7 @@ class Modules extends Lib\Utils {
 
   public function __construct() {
     $this->loadModules();
-    register_activation_hook(__FILE__, array($this, 'activate'));
+    register_activation_hook(__FILE__, [$this, 'activate']);
     if (!static::isThemeFeature('square-extra-user')) {
       remove_role('square-manager');
     }

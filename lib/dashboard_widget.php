@@ -28,8 +28,8 @@ abstract class DashboardWidget extends Admin {
    * Register hook callbacks
    */
   public static function registerHookCallbacks() {
-    add_action('wp_dashboard_setup', array(get_called_class() , 'widgetInit'));
-    add_action('admin_menu', array( get_called_class(), 'removeNavLabel'), 10);
-    add_action('admin_bar_menu', array( get_called_class(), 'removeNode'), 999);
+    add_action('wp_dashboard_setup', [get_called_class() , 'widgetInit']);
+    add_action('admin_menu', [ get_called_class(), 'removeNavLabel'], 10);
+    add_action('admin_bar_menu', [ get_called_class(), 'removeNode'], 999);
   }
 }

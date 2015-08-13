@@ -52,7 +52,7 @@
      *
      * @param array $items Array of extra 'At a Glance' widget items.
      */
-    $elements = apply_filters('square_glance_items', array());
+    $elements = apply_filters('square_glance_items', []);
 
     if ($elements) {
       echo '<li>' . implode("</li>\n<li>", $elements) . "</li>\n";

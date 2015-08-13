@@ -45,7 +45,7 @@ class RemovePosts extends \Formwerdung\Square\Lib\Admin {
   }
 
   public static function customMenuOrder() {
-    $menu_order = array(
+    $menu_order = [
       'index.php',               // Dashboard
       'separator1',              // First separator
       'edit.php?post_type=page', // Pages
@@ -60,7 +60,7 @@ class RemovePosts extends \Formwerdung\Square\Lib\Admin {
       'tools.php',               // Tools
       'options-general.php',     // Settings
       'separator-last',          // Last separator
-    );
+    ];
     return $menu_order;
   }
 
@@ -87,7 +87,7 @@ class RemovePosts extends \Formwerdung\Square\Lib\Admin {
 			http://localhost/?p=1			- single post
 		*/
     if ($instance !== false) {
-        $posts = array(); // we are querying for post type `post`
+        $posts = []; // we are querying for post type `post`
     }
 
         return $posts;
@@ -138,10 +138,10 @@ class RemovePosts extends \Formwerdung\Square\Lib\Admin {
 
     public static function registerHookCallbacks() {
       add_action('init', [ get_called_class(), 'redirectAdminPages']);
-      add_action('admin_menu', array(get_called_class(), 'hideMenuItems'), 10);
-      add_action('admin_bar_menu', array(get_called_class(), 'removeNode'), 999);
+      add_action('admin_menu', [get_called_class(), 'hideMenuItems'], 10);
+      add_action('admin_bar_menu', [get_called_class(), 'removeNode'], 999);
       add_filter('custom_menu_order', '__return_true');
-      add_filter('menu_order', array(get_called_class(), 'customMenuOrder'));
+      add_filter('menu_order', [get_called_class(), 'customMenuOrder']);
 
       static::pagenowHookCallbacks();
     }

@@ -24,7 +24,7 @@ abstract class Module extends Utils {
    * @param  string $req        'once' to use require_once() | 'always' to use require()
    * @return string
    */
-  protected static function renderTemplate($temp_path = false, $vars = array(), $req = 'once') {
+  protected static function renderTemplate($temp_path = false, $vars = [], $req = 'once') {
 
     $template_path = locate_template(basename($temp_path));
     if (!$template_path) {

@@ -124,7 +124,7 @@ class RemoveComments extends \Formwerdung\Square\Lib\Admin {
   /**
    * filter feed
    */
-  public static function filterHeadFeed($args = array()) {
+  public static function filterHeadFeed($args = []) {
         // if wp_head feed_links has not been tampered with (WP 4.1.1)
     if (has_action('wp_head', 'feedLinks') == 2) {
         // replace it with a modified version
@@ -134,15 +134,15 @@ class RemoveComments extends \Formwerdung\Square\Lib\Admin {
   }
 
   // replaces feed_links function, WP 4.1.1
-  public static function feedLinks($args = array()) {
+  public static function feedLinks($args = []) {
     if (!current_theme_supports('automatic-feed-links')) {
       return; }
-      $defaults = array(
+      $defaults = [
           /* translators: Separator between blog name and feed type in feed links */
           'separator'     => _x('&raquo;', 'feed link'),
           /* translators: 1: blog title, 2: separator (raquo) */
           'feedtitle'     => __('%1$s %2$s Feed'),
-      );
+      ];
       $args = wp_parse_args($args, $defaults);
       echo '<link rel="alternate" type="' . feed_content_type() . '" title="' . esc_attr(sprintf($args['feedtitle'], get_bloginfo('name'), $args['separator'])) . '" href="' . esc_url(get_feed_link()) . "\" />\n";
   }

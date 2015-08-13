@@ -25,6 +25,9 @@
     </properties>
   </rule>
 
+  <!-- Force usage of short array syntax -->
+  <rule ref="Generic.Arrays.DisallowLongArraySyntax.Found"></rule>
+
   <!-- Verify that operators have valid spacing surrounding them -->
   <rule ref="Squiz.WhiteSpace.OperatorSpacing"></rule>
 </ruleset>

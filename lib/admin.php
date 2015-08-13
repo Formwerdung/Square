@@ -85,14 +85,14 @@ abstract class Admin extends Module {
    */
   protected static function buildMetaBoxArray($screen = 'dashboard') {
     $meta_box_ids = static::$remove_mbs;
-    $meta_boxes = array();
+    $meta_boxes = [];
 
     foreach ($meta_box_ids as $meta_box_id) {
-      $meta_boxes[] = array(
+      $meta_boxes[] = [
         'id' => $meta_box_id,
         'page' => $screen,
         'context' => static::evaluateMetaBoxContext($meta_box_id)
-      );
+      ];
     }
 
     return $meta_boxes;
