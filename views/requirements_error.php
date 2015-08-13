@@ -10,7 +10,7 @@
 		<?php else : ?>
 			<li>
 				<strong>Having WordPress <?php echo self::REQUIRED_WP_VERSION; ?>+</strong>
-				<em>(You're running version <?php echo esc_html( $wp_version ); ?>)</em>
+				<em>(You're running version <?php echo esc_html($wp_version); ?>)</em>
 			</li>
 		<?php endif; ?>
 	</ul>

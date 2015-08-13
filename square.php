@@ -2,8 +2,8 @@
 /*
 Plugin Name: Square
 Plugin URI:  https://github.com/johnnyicarus/square
-Description: Easily customize the WordPress Backend without settings.
-Version:     0.1.0
+Description: A WordPress mu-plugin which contains a collection of modules to apply theme-agnostic back-end modifications.
+Version:     0.0.4
 Author:      Formwerdung
 Author URI:  http://formwerdung.ch
 
@@ -64,7 +64,7 @@ class Square {
       require_once('modules.php');
       $modules = new Square\Modules();
     } else {
-      add_action( 'admin_notices', [$this, 'requirementsError']);
+      add_action('admin_notices', [$this, 'requirementsError']);
     }
   }
 
