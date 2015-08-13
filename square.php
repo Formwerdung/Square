@@ -18,29 +18,33 @@ class Square {
   /**
    * Plugin requires php version
    *
-   * @var string constant
+   * @access public
+   * @var    string
    */
-  const REQUIRED_PHP_VERSION = '5.4';
+  public $required_php_version = '5.4';
 
   /**
    * Plugin requires WordPress version
    *
-   * @var string constant
+   * @access public
+   * @var    string
    */
-  const REQUIRED_WP_VERSION = '4.2.4';
+  public $required_wp_version = '4.2.4';
 
   /**
    * Is the requirements problem php
    *
-   * @var bool
+   * @access public
+   * @var    bool
    */
-  public static $is_problem_php;
+  public $is_problem_php = false;
 
   /**
    * Constructor, pass to bootstrapper
    *
    * @since  0.0.1
    * @access public
+   * @return void
    */
   public function __construct() {
     $this->bootstrap();
@@ -56,7 +60,7 @@ class Square {
    * @return void
    */
   protected function bootstrap() {
-    if ($this->requirementsMet(self::REQUIRED_PHP_VERSION, self::REQUIRED_WP_VERSION)) {
+    if ($this->requirementsMet($this->required_php_version, $this->required_wp_version)) {
       require_once('lib/utils.php');
       require_once('lib/module.php');
       require_once('lib/admin.php');
@@ -96,7 +100,7 @@ class Square {
   protected function requirementsMet($req_php_version, $req_wp_version) {
     global $wp_version;
     if (version_compare(PHP_VERSION, $req_php_version, '<')) {
-      self::$is_problem_php = true;
+      $this->is_problem_php = true;
       return false;
     }
     if (version_compare($wp_version, $req_wp_version, '<')) {
