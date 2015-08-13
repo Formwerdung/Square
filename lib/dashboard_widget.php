@@ -2,7 +2,7 @@
 
 namespace Formwerdung\Square\Lib;
 
-abstract class DashboardWidget extends Admin {
+class DashboardWidget extends Admin {
 
   /**
    * @var   string ID of the widget we're gonna create

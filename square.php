@@ -44,7 +44,6 @@ class Square {
    *
    * @since  0.0.1
    * @access public
-   * @return void
    */
   public function __construct() {
     $this->bootstrap();
@@ -56,8 +55,7 @@ class Square {
    *
    * @since  0.0.1
    * @access private
-   * @uses   add_action function
-   * @return void
+   * @uses   add_action()
    */
   private function bootstrap() {
     if ($this->requirementsMet($this->required_php_version, $this->required_wp_version)) {
@@ -78,7 +76,6 @@ class Square {
    * @since  0.0.5
    * @access public
    * @uses   $wp_version global string
-   * @return void
    */
   public function requirementsError() {
     global $wp_version;
@@ -99,6 +96,7 @@ class Square {
    */
   private function requirementsMet($req_php_version, $req_wp_version) {
     global $wp_version;
+    
     if (version_compare(PHP_VERSION, $req_php_version, '<')) {
       $this->is_problem_php = true;
       return false;
@@ -116,7 +114,6 @@ class Square {
  * @since       0.0.1
  * @lastchanged 0.0.5
  * @access      public
- * @return      void
  */
 if (!function_exists('square_init')) {
   function square_init() {

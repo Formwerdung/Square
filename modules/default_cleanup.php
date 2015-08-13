@@ -5,28 +5,22 @@ namespace Formwerdung\Square\Modules;
 class DefaultCleanup extends \Formwerdung\Square\Lib\DashboardWidget {
 
   /**
-   * Key of menu label that is to be removed
-   * @url http://code.tutsplus.com/articles/customizing-your-wordpress-admin--wp-24941
+   * @var    string $menu_label_key the key of the top level menu label to be removed (75 = tools, see link)
+   * @access protected
+   * @link   http://code.tutsplus.com/articles/customizing-your-wordpress-admin--wp-24941
    */
-  public static $menu_label_key = 75; // Removes "Tools"
+  protected static $menu_label_key = 75;
 
   /**
-   * Capability user has to have for the menu label to NOT be hidden
+   * @var    string $menu_label_cap capability that user needs to have to not have the menu label hidden
+   * if it is not set, label will be hidden for all users
+   * @access protected
    */
-  public static $menu_label_cap = 'manage_options';
+  protected static $menu_label_cap = 'manage_options';
 
   /**
-   * ID of new overview widget
-   */
-  protected static $widget_id = 'square-overview';
-
-  /**
-   * Name of new overview widget
-   */
-  protected static $widget_name = 'Overview';
-
-  /**
-   * Array of mbs for removal
+   * @var    array of meta-box-ids for their removal
+   * @access protected
    */
   protected static $remove_mbs = [
     'dashboard_right_now',
@@ -41,7 +35,22 @@ class DefaultCleanup extends \Formwerdung\Square\Lib\DashboardWidget {
   ];
 
   /**
-   * Call on the view and pass post type array to it
+   * @var   string ID of the widget we're gonna create
+   * @access protected
+   */
+  protected static $widget_id = 'square-overview';
+
+  /**
+   * @var    string name of the widget we're gonna create
+   * @access protected
+   */
+  protected static $widget_name = 'Overview';
+
+  /**
+   * Overview widget implementation of widgetTemplate
+   *
+   * @since  0.0.1
+   * @access public
    */
   public static function widgetTemplate() {
     $post_types = static::buildPostTypeArray();
@@ -49,9 +58,12 @@ class DefaultCleanup extends \Formwerdung\Square\Lib\DashboardWidget {
   }
 
   /**
-   * Enqueues stylesheet for the overview widget
+   * Enqueue a stylesheet for the overview widget
    *
-   * @return void
+   * @since  0.0.1
+   * @access public
+   * @uses   wp_register_style()
+   * @uses   wp_enqueue_style()
    */
   public static function loadResources() {
     wp_register_style(
@@ -63,15 +75,17 @@ class DefaultCleanup extends \Formwerdung\Square\Lib\DashboardWidget {
   }
 
   /**
-   * Register hook callbacks
+   * Implement register hook callback function
    *
-   * @return void
+   * @since  0.0.1
+   * @access public
+   * @uses   add_action()
    */
   public static function registerHookCallbacks() {
     add_action('admin_enqueue_scripts', [ get_called_class(), 'loadResources' ]);
-    add_action('admin_menu', [ get_called_class(), 'hideMenuItems'], 10);
-    add_action('admin_menu', [ get_called_class(), 'removeMetaBoxes'], 12);
-    add_action('admin_bar_menu', [ get_called_class(), 'removeNode'], 999);
-    add_action('wp_dashboard_setup', [ get_called_class() , 'widgetInit']);
+    add_action('admin_menu', [ get_called_class(), 'hideMenuItems' ], 10);
+    add_action('admin_menu', [ get_called_class(), 'removeMetaBoxes' ], 12);
+    add_action('admin_bar_menu', [ get_called_class(), 'removeNode' ], 999);
+    add_action('wp_dashboard_setup', [ get_called_class() , 'widgetInit' ]);
   }
 }

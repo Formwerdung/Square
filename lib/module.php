@@ -3,22 +3,23 @@
 namespace Formwerdung\Square\Lib;
 
 abstract class Module extends Utils {
-  public static $capability;
 
-  public function __construct() {
+  /**
+   * Constructor for all modules. Enforces use of registerHookCallbacks, no add_action or add_filter
+   * calls in the constructor allowed
+   *
+   * @since  0.0.1
+   * @access protected
+   */
+  protected function __construct() {
     static::registerHookCallbacks();
   }
 
   /**
    * Render a template
    *
-   * Allows parent/child themes to override the markup by placing the a file named basename( $default_template_path ) in their root folder,
-   * and also allows plugins or themes to override the markup by a filter. Themes might prefer that method if they place their templates
-   * in sub-directories to avoid cluttering the root folder. In both cases, the theme/plugin will have access to the variables so they can
-   * fully customize the output.
-   *
-   * @mvc @model
-   *
+   * @since  0.0.1
+   * @access protected
    * @param  string $temp_path  The path to the template, relative to the plugin's `views` folder
    * @param  array  $vars       An array of variables to pass into the template's scope, indexed with the variable name so that it can be extract()-ed
    * @param  string $req        'once' to use require_once() | 'always' to use require()
@@ -50,9 +51,12 @@ abstract class Module extends Utils {
   }
 
   /**
-   * Hook callbacks
+   * Enforce use of hook callback function if default constructor is used.
+   *
+   * @since  0.0.1
+   * @access protected
    */
-  public static function registerHookCallbacks() {
+  protected static function registerHookCallbacks() {
     throw new RuntimeException("Unimplemented");
   }
 }

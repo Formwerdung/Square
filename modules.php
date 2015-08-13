@@ -2,7 +2,7 @@
 
 namespace Formwerdung\Square;
 
-class Modules extends Lib\Utils {
+class Modules extends Lib\Module {
 
   /**
    * Constructor. Load modules, check activation hook and remove the role
