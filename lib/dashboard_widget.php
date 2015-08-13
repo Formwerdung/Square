@@ -3,11 +3,25 @@
 namespace Formwerdung\Square\Lib;
 
 abstract class DashboardWidget extends Admin {
+
+  /**
+   * @var   string ID of the widget we're gonna create
+   * @access protected
+   */
   protected static $widget_id;
+
+  /**
+   * @var    string name of the widget we're gonna create
+   * @access protected
+   */
   protected static $widget_name;
 
   /**
-   * Init function
+   * Wrapper function for wp_add_dashboard_widget
+   *
+   * @since  0.0.1
+   * @access public
+   * @uses   wp_add_dashboard_widget()
    */
   public static function widgetInit() {
     wp_add_dashboard_widget(
@@ -18,18 +32,12 @@ abstract class DashboardWidget extends Admin {
   }
 
   /**
-   * Render template
+   * Enforce implementation of widgetTemplate whose sole purpose is to pass data to the view
+   *
+   * @since  0.0.1
+   * @access public
    */
   public static function widgetTemplate() {
     throw new RuntimeException("Unimplemented");
-  }
-
-  /**
-   * Register hook callbacks
-   */
-  public static function registerHookCallbacks() {
-    add_action('wp_dashboard_setup', [get_called_class() , 'widgetInit']);
-    add_action('admin_menu', [ get_called_class(), 'removeNavLabel'], 10);
-    add_action('admin_bar_menu', [ get_called_class(), 'removeNode'], 999);
   }
 }
