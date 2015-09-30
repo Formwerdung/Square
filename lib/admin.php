@@ -206,7 +206,7 @@ class Admin extends Module {
     $output = $as_array ? 'names' : 'objects';
     // Loop through all post types
     $post_types = get_post_types(
-      ['public' => true, '_builtin' => true],
+      ['public' => true],
       $output
     );
     if (static::isThemeFeature('square-remove-posts')) {
