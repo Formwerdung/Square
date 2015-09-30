@@ -22,8 +22,12 @@ abstract class Utils {
 
   /**
    * Replace underscores with dashes in string
+   *
+   * @since  0.0.6
+   * @access protected
+   * @param  $str string
    */
-  public static function underscoresToDashes($str) {
+  protected static function underscoresToDashes($str) {
     $string = str_replace('_', '-', $str);
     return $string;
   }
@@ -32,8 +36,13 @@ abstract class Utils {
    * Remove dashes in strings and convert to camel case
    *
    * @url http://stackoverflow.com/questions/2791998/convert-dashes-to-camelcase-in-php
+   *
+   * @since  0.0.6
+   * @access protected
+   * @param  $str          string
+   * @param  $capFirstChar bool capitalize first character (for class syntax)
    */
-  public static function dashesToCamelCase($str, $capFirstChar = false) {
+  protected static function dashesToCamelCase($str, $capFirstChar = false) {
     $string = str_replace(' ', '', ucwords(str_replace('-', ' ', $str)));
     if (!$capFirstChar) {
       $string = lcfirst($string);
