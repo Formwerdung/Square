@@ -31,7 +31,7 @@ class Modules extends Lib\Module {
     $this->loadDefaultModule();
     foreach (glob(__DIR__ . '/modules/*.php') as $file) {
       $basename = basename($file, '.php');
-      $basename = \Formwerdung\Triangle::underscoresToDashes($basename);
+      $basename = static::underscoresToDashes($basename);
       $feature = 'square-' . $basename;
       if ($this->isThemeFeature($feature)) {
         $this->loadModule($file, $basename);
@@ -49,7 +49,7 @@ class Modules extends Lib\Module {
    */
   private function loadModule($f, $bn) {
     require_once($f);
-    $class = \Formwerdung\Triangle::dashesToCamelCase($bn, true);
+    $class = static::dashesToCamelCase($bn, true);
     $class = '\Formwerdung\Square\Modules\\' . $class;
     new $class;
   }

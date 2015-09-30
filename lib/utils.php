@@ -19,4 +19,25 @@ abstract class Utils {
     }
     return false;
   }
+
+  /**
+   * Replace underscores with dashes in string
+   */
+  public static function underscoresToDashes($str) {
+    $string = str_replace('_', '-', $str);
+    return $string;
+  }
+
+  /**
+   * Remove dashes in strings and convert to camel case
+   *
+   * @url http://stackoverflow.com/questions/2791998/convert-dashes-to-camelcase-in-php
+   */
+  public static function dashesToCamelCase($str, $capFirstChar = false) {
+    $string = str_replace(' ', '', ucwords(str_replace('-', ' ', $str)));
+    if (!$capFirstChar) {
+      $string = lcfirst($string);
+    }
+    return $string;
+  }
 }
