@@ -57,6 +57,6 @@ abstract class Module extends Utils {
    * @access protected
    */
   protected static function registerHookCallbacks() {
-    throw new RuntimeException("Unimplemented");
+    throw new \RuntimeException("Unimplemented");
   }
 }
