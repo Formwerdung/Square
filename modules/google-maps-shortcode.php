@@ -2,7 +2,7 @@
 
 namespace Formwerdung\Square\Modules;
 
-class GoogleMapsShortcode {
+class GoogleMapsShortcode extends \Formwerdung\Square\Lib\Module {
 
   static protected $sc_beginning = '<div class="google-map"><iframe
     frameborder="0"
@@ -89,8 +89,8 @@ class GoogleMapsShortcode {
    * Main checking function for attributes
    */
   protected static function checkAtts($atts) {
-    if (array_key_exists('mode', $atts))
-      $atts['mode'] = self::addFallbackValue($atts['mode'], ['place', 'directions', 'search', 'view', 'streetview'], 'place');
+    if (array_key_exists('mode', $atts)) {
+      $atts['mode'] = self::addFallbackValue($atts['mode'], ['place', 'directions', 'search', 'view', 'streetview'], 'place'); }
     $atts = shortcode_atts(self::$atts, $atts);
     $atts = self::sanitize($atts);
     return $atts;
@@ -120,7 +120,7 @@ class GoogleMapsShortcode {
    * fallback string. Sanitizes for certain keyword entries in the Google Maps Embed API.
    *
    */
-  protected static function addFallbackValue($str, $cases = [], $default) {
+  protected static function addFallbackValue($str, $cases, $default) {
     if (!empty($str)) {
       if (!in_array($str, $cases, true)) {
         $str = $default;
@@ -129,7 +129,7 @@ class GoogleMapsShortcode {
     return $str;
   }
 
-  protected static function createOptionalsStr($optionals_array = []) {
+  protected static function createOptionalsStr($optionals_array) {
     $optionals = self::prepOptionals($optionals_array);
     if (!empty($optionals)) {
       foreach ($optionals as $key => $value) {
@@ -139,7 +139,7 @@ class GoogleMapsShortcode {
     }
   }
 
-  protected static function prepOptionals($optionals = []) {
+  protected static function prepOptionals($optionals) {
     $new_optionals = [];
     foreach ($optionals as $key => $value) {
       if (!empty($value)) {
@@ -168,6 +168,27 @@ class GoogleMapsShortcode {
   protected static function plusSpaces($str) {
     $str = preg_replace('/\s+/', '+', $str);
     return $str;
+  }
+
+  /**
+   * Enqueue a stylesheet for the overview widget
+   *
+   * @since  0.0.7
+   * @access public
+   * @uses   wp_register_style()
+   * @uses   wp_enqueue_style()
+   */
+  public static function loadResources() {
+    wp_register_style(
+      'square_gmap_css',
+      plugins_url('assets/css/square-gmap.css', dirname(__FILE__)),
+      []
+    );
+    wp_enqueue_style('square_gmap_css');
+  }
+
+  public static function registerHookCallbacks() {
+    add_action('wp_enqueue_scripts', [get_called_class(), 'loadResources']);
   }
 }
 
