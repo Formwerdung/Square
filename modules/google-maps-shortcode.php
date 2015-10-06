@@ -83,7 +83,7 @@ class GoogleMapsShortcode extends \Formwerdung\Square\Lib\Module {
   public static function buildEmbedString($atts) {
     $atts = self::checkAtts($atts);
 
-    $shortcode =  self::$sc_beginning . $atts['type'] . '?key=' . self::$api_key;
+    $shortcode = self::$sc_beginning . $atts['type'] . '?key=' . self::$api_key;
     $shortcode .= self::addTypeBased($atts);
     $shortcode .= self::addOptionals($atts);
     $shortcode .= self::$sc_end;
@@ -108,6 +108,7 @@ class GoogleMapsShortcode extends \Formwerdung\Square\Lib\Module {
         break;
       case 'view':
         $str .= '&center=' . $atts['center'];
+        break;
       case 'streetview':
         if (empty($atts['pano'])) {
           $str .= '&location=' . $atts['location'];
@@ -116,6 +117,7 @@ class GoogleMapsShortcode extends \Formwerdung\Square\Lib\Module {
         } else {
           $str .= '&location=' . $atts['location'] . '&pano=' . $atts['pano'];
         }
+        break;
       default:
         $str .= '&q=' . $atts['search'];
         break;
@@ -275,7 +277,7 @@ class GoogleMapsShortcode extends \Formwerdung\Square\Lib\Module {
     wp_enqueue_style('square_gmap_css');
 
     wp_enqueue_script(
-  		'square_gmap_js',
+        'square_gmap_js',
       plugins_url('assets/js/square-gmap.js', dirname(__FILE__)),
       ['jquery'],
       false,
