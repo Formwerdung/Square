@@ -90,8 +90,8 @@ class RemovePosts extends \Formwerdung\Square\Lib\Admin {
    * @since  0.0.3
    * @access public
    * @link   http://tonykwon.com/wordpress-plugins/wp-disable-posts/
-   * @uses   $wp_query global object
    * @param  array $posts, found posts based on supplied SQL Query ($wp_query->request)
+   * @uses   $wp_query global object
    * @return array $posts, found posts
    */
   public static function checkPostType($posts = []) {
