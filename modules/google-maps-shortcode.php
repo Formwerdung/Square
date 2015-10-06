@@ -185,6 +185,14 @@ class GoogleMapsShortcode extends \Formwerdung\Square\Lib\Module {
       []
     );
     wp_enqueue_style('square_gmap_css');
+
+    wp_enqueue_script(
+  		'square_gmap_js',
+      plugins_url('assets/js/square-gmap.js', dirname(__FILE__)),
+      ['jquery'],
+      false,
+      true
+    );
   }
 
   public static function registerHookCallbacks() {
