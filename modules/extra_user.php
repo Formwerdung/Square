@@ -4,6 +4,13 @@ namespace Formwerdung\Square\Modules;
 
 class ExtraUser {
 
+  /**
+   * Special constrctor for the extra-user-module
+   *
+   * @since  0.0.1
+   * @access public
+   * @uses   add_role()
+   */
   public function __construct() {
     $caps = [
       'moderate_comments' => true,
