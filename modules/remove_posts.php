@@ -48,7 +48,7 @@ class RemovePosts extends \Formwerdung\Square\Lib\Admin {
       foreach ($pages as $page) {
         switch ($pagenow) {
           case $page:
-            if (!array_key_exists('post_type', $_GET) && !array_key_exists('taxonomy', $_GET) && !$_POST) {
+            if (!array_key_exists('post_type', $_GET) && !array_key_exists('taxonomy', $_GET)) {
               wp_safe_redirect(get_admin_url(), 301);
             }
             break;
