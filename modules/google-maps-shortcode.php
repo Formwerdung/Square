@@ -17,12 +17,6 @@ class GoogleMapsShortcode extends \Formwerdung\Square\Lib\Module {
     src="https://www.google.com/maps/embed/v1/';
 
   /**
-   * @var    string $api_key your application's Google Maps API key
-   * @access protected
-   */
-  static protected $api_key = 'API_KEY';
-
-  /**
    * @var    string $sc_end markup for the google maps shortcode
    * @access protected
    * @link   https://developers.google.com/maps/documentation/embed/guide#top_of_page
@@ -35,6 +29,7 @@ class GoogleMapsShortcode extends \Formwerdung\Square\Lib\Module {
    * @link   https://developers.google.com/maps/documentation/embed/guide#top_of_page
    */
   static protected $atts = [
+    'api_key' => 'API_KEY',
     'type'   => 'place',
     'search' => '', // place
     'center' => '', // required for view, optional for others
@@ -83,7 +78,7 @@ class GoogleMapsShortcode extends \Formwerdung\Square\Lib\Module {
   public static function buildEmbedString($atts) {
     $atts = self::checkAtts($atts);
 
-    $shortcode = self::$sc_beginning . $atts['type'] . '?key=' . self::$api_key;
+    $shortcode = self::$sc_beginning . $atts['type'] . '?key=' . $atts['api_key'];
     $shortcode .= self::addTypeBased($atts);
     $shortcode .= self::addOptionals($atts);
     $shortcode .= self::$sc_end;
